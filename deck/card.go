@@ -48,9 +48,9 @@ type Card struct {
 
 func (c Card) String() string {
 	if c.Suit == JOKER {
-		return "Joker"
+		return "JOKER"
 	}
-	return fmt.Sprintf("%s of %s", c.Suit, c.Type)
+	return fmt.Sprintf("%s of %s", c.Type, c.Suit)
 }
 
 // Type DeckOptions is used to configure deck creation behaviour
@@ -180,7 +180,9 @@ func NewDeck(options ...OptionFunc) []Card {
 	//comparators
 	slices.SortStableFunc(deck, deckOptions.Comparator)
 	//shuffle
-	ShuffleDeck(deck, 3)
+	if deckOptions.Shuffle {
+		ShuffleDeck(deck, 3)
+	}
 
 	return deck
 }
@@ -200,7 +202,7 @@ func createStandardDeck() []Card {
 	deck := make([]Card, 0, 52)
 	for i := SPADE; i <= HEART; i++ {
 		for j := ACE; j <= KING; j++ {
-			AddCards(deck, Card{i, j})
+			deck = AddCards(deck, Card{i, j})
 		}
 	}
 	return deck

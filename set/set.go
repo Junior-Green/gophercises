@@ -13,6 +13,12 @@ func (s *Set[T]) Add(v T) {
 	s.list[v] = struct{}{}
 }
 
+func (s *Set[T]) AddAll(v ...T) {
+	for i := range v {
+		s.list[v[i]] = struct{}{}
+	}
+}
+
 func (s *Set[T]) Remove(v T) {
 	delete(s.list, v)
 }
